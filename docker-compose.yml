@@ -49,7 +49,7 @@ services:
     environment:
       NODE_PORT: 3000
       PG_DATABASE_URL: postgres://twenty:twenty@twenty-db:5432/twenty
-      SERVER_URL: http://localhost:3010
+      SERVER_URL: https://crm.digitalstratify.co
       REDIS_URL: redis://twenty-redis:6379
       STORAGE_TYPE: local
       APP_SECRET: change_me_with_a_random_string
@@ -75,7 +75,7 @@ services:
         condition: service_healthy
     environment:
       PG_DATABASE_URL: postgres://twenty:twenty@twenty-db:5432/twenty
-      SERVER_URL: http://localhost:3010
+      SERVER_URL: https://crm.digitalstratify.co
       REDIS_URL: redis://twenty-redis:6379
       STORAGE_TYPE: local
       APP_SECRET: change_me_with_a_random_string
@@ -111,7 +111,7 @@ services:
   # ============================================================
 
   certbot:
-    image: certbot/certbot
+    image: certbot/certbot:latest
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
@@ -119,7 +119,7 @@ services:
       - webroot:/var/www/html
     depends_on:
       - nginx
-    command: certonly --webroot --webroot-path=/var/www/html --email omarichou567@gmail.com --agree-tos --no-eff-email --force-renewal -d crm.digitalstratify.co
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - twenty-network
 
