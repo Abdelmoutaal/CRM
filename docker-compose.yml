@@ -1,0 +1,135 @@
+services:
+
+  # ============================================================
+  # TWENTY CRM
+  # ============================================================
+
+  twenty-db:
+    image: postgres:15
+    container_name: twenty_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: twenty
+      POSTGRES_USER: twenty
+      POSTGRES_PASSWORD: twenty
+    volumes:
+      - twenty-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U twenty -d twenty"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - twenty-network
+
+  twenty-redis:
+    image: redis
+    container_name: twenty_redis
+    restart: unless-stopped
+    command: ["--maxmemory-policy", "noeviction"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - twenty-network
+
+  twenty-server:
+    image: twentycrm/twenty:latest
+    container_name: twenty_server
+    restart: unless-stopped
+    expose:
+      - "3000"
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty-redis:
+        condition: service_healthy
+    environment:
+      NODE_PORT: 3000
+      PG_DATABASE_URL: postgres://twenty:twenty@twenty-db:5432/twenty
+      SERVER_URL: http://localhost:3010
+      REDIS_URL: redis://twenty-redis:6379
+      STORAGE_TYPE: local
+      APP_SECRET: change_me_with_a_random_string
+    volumes:
+      - twenty-server-data:/app/packages/twenty-server/.local-storage
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000/healthz"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - twenty-network
+
+  twenty-worker:
+    image: twentycrm/twenty:latest
+    container_name: twenty_worker
+    restart: unless-stopped
+    command: ["yarn", "worker:prod"]
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty-server:
+        condition: service_healthy
+    environment:
+      PG_DATABASE_URL: postgres://twenty:twenty@twenty-db:5432/twenty
+      SERVER_URL: http://localhost:3010
+      REDIS_URL: redis://twenty-redis:6379
+      STORAGE_TYPE: local
+      APP_SECRET: change_me_with_a_random_string
+      DISABLE_DB_MIGRATIONS: "true"
+      DISABLE_CRON_JOBS_REGISTRATION: "true"
+    volumes:
+      - twenty-server-data:/app/packages/twenty-server/.local-storage
+    networks:
+      - twenty-network
+
+  # ============================================================
+  # NGINX REVERSE PROXY
+  # ============================================================
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - webroot:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+    depends_on:
+      - twenty-server
+    restart: unless-stopped
+    networks:
+      - twenty-network
+
+  # ============================================================
+  # CERTBOT (SSL Let's Encrypt)
+  # ============================================================
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - webroot:/var/www/html
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/html --email omarichou567@gmail.com --agree-tos --no-eff-email --force-renewal -d crm.digitalstratify.com
+    networks:
+      - twenty-network
+
+networks:
+  twenty-network:
+    driver: bridge
+
+volumes:
+  twenty-db-data:
+  twenty-server-data:
+  webroot:
+  certbot-etc:
+  certbot-var:
