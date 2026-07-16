@@ -53,6 +53,7 @@ services:
       REDIS_URL: redis://twenty-redis:6379
       STORAGE_TYPE: local
       APP_SECRET: change_me_with_a_random_string
+      SIGN_UP_ENABLED: "true"
     volumes:
       - twenty-server-data:/app/packages/twenty-server/.local-storage
     healthcheck:
