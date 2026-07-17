@@ -52,8 +52,8 @@ services:
       SERVER_URL: https://crm.digitalstratify.co
       REDIS_URL: redis://twenty-redis:6379
       STORAGE_TYPE: local
-      APP_SECRET: w7/6ohnuYRUwzU5bJYZRnCJyMHHsGQWtKxmGWipLIa0=
-      ENCRYPTION_KEY: Elii8bEXJRUQOYrSxZrsZMC4R2uuEamaR8wTgZAPQoQ=
+      APP_SECRET: ${APP_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       SIGN_UP_ENABLED: "true"
     volumes:
       - twenty-server-data:/app/packages/twenty-server/.local-storage
@@ -80,8 +80,8 @@ services:
       SERVER_URL: https://crm.digitalstratify.co
       REDIS_URL: redis://twenty-redis:6379
       STORAGE_TYPE: local
-      APP_SECRET: w7/6ohnuYRUwzU5bJYZRnCJyMHHsGQWtKxmGWipLIa0=
-      ENCRYPTION_KEY: Elii8bEXJRUQOYrSxZrsZMC4R2uuEamaR8wTgZAPQoQ=
+      APP_SECRET: ${APP_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       DISABLE_DB_MIGRATIONS: "true"
       DISABLE_CRON_JOBS_REGISTRATION: "true"
     volumes:
