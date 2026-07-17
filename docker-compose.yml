@@ -1,12 +1,7 @@
 services:
 
-  # ============================================================
-  # TWENTY CRM
-  # ============================================================
-
   twenty-db:
     image: postgres:17
-    container_name: twenty_db
     restart: unless-stopped
     environment:
       POSTGRES_DB: twenty
@@ -19,12 +14,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    networks:
-      - twenty-network
 
   twenty-redis:
     image: redis
-    container_name: twenty_redis
     restart: unless-stopped
     command: ["--maxmemory-policy", "noeviction"]
     healthcheck:
@@ -32,15 +24,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    networks:
-      - twenty-network
 
   twenty-server:
     image: twentycrm/twenty:latest
-    container_name: twenty_server
     restart: unless-stopped
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
     depends_on:
       twenty-db:
         condition: service_healthy
@@ -62,12 +51,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-    networks:
-      - twenty-network
 
   twenty-worker:
     image: twentycrm/twenty:latest
-    container_name: twenty_worker
     restart: unless-stopped
     command: ["yarn", "worker:prod"]
     depends_on:
@@ -86,12 +72,6 @@ services:
       DISABLE_CRON_JOBS_REGISTRATION: "true"
     volumes:
       - twenty-server-data:/app/packages/twenty-server/.local-storage
-    networks:
-      - twenty-network
-
-networks:
-  twenty-network:
-    driver: bridge
 
 volumes:
   twenty-db-data:
