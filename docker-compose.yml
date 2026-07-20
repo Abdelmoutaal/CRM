@@ -3,12 +3,13 @@ services:
   twenty-db:
     image: postgres:17
     restart: unless-stopped
+    container_name: twenty_db
     environment:
       POSTGRES_DB: twenty
       POSTGRES_USER: twenty
       POSTGRES_PASSWORD: twenty
     volumes:
-      - twenty-db-data:/var/lib/postgresql/data
+      - /data/crm/postgres:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U twenty -d twenty"]
       interval: 5s
@@ -18,6 +19,7 @@ services:
   twenty-redis:
     image: redis
     restart: unless-stopped
+    container_name: twenty_redis
     command: ["--maxmemory-policy", "noeviction"]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -28,6 +30,7 @@ services:
   twenty-server:
     image: twentycrm/twenty:latest
     restart: unless-stopped
+    container_name: twenty_server
     ports:
       - "3000:3000"
     depends_on:
@@ -45,7 +48,7 @@ services:
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       SIGN_UP_ENABLED: "true"
     volumes:
-      - twenty-server-data:/app/packages/twenty-server/.local-storage
+      - /data/crm/server-storage:/app/packages/twenty-server/.local-storage
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:3000/healthz"]
       interval: 5s
@@ -55,6 +58,7 @@ services:
   twenty-worker:
     image: twentycrm/twenty:latest
     restart: unless-stopped
+    container_name: twenty_worker
     command: ["yarn", "worker:prod"]
     depends_on:
       twenty-db:
@@ -71,8 +75,4 @@ services:
       DISABLE_DB_MIGRATIONS: "true"
       DISABLE_CRON_JOBS_REGISTRATION: "true"
     volumes:
-      - twenty-server-data:/app/packages/twenty-server/.local-storage
-
-volumes:
-  twenty-db-data:
-  twenty-server-data:
+      - /data/crm/server-storage:/app/packages/twenty-server/.local-storage
