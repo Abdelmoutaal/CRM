@@ -3,6 +3,7 @@ services:
   twenty-db:
     image: postgres:17
     restart: unless-stopped
+    container_name: twenty_db
     environment:
       POSTGRES_DB: twenty
       POSTGRES_USER: twenty
@@ -18,6 +19,7 @@ services:
   twenty-redis:
     image: redis
     restart: unless-stopped
+    container_name: twenty_redis
     command: ["--maxmemory-policy", "noeviction"]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -28,6 +30,7 @@ services:
   twenty-server:
     image: twentycrm/twenty:latest
     restart: unless-stopped
+    container_name: twenty_server
     ports:
       - "3000:3000"
     depends_on:
@@ -55,6 +58,7 @@ services:
   twenty-worker:
     image: twentycrm/twenty:latest
     restart: unless-stopped
+    container_name: twenty_worker
     command: ["yarn", "worker:prod"]
     depends_on:
       twenty-db:
