@@ -49,6 +49,7 @@ services:
       APP_SECRET: ${APP_SECRET}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       SIGN_UP_ENABLED: "true"
+      INVITATION_TOKEN_EXPIRES_IN: "7d"
     volumes:
       - /data/crm/server-storage:/app/packages/twenty-server/.local-storage
     healthcheck:
