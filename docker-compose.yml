@@ -28,7 +28,9 @@ services:
       retries: 10
 
   twenty-server:
-    image: twentycrm/twenty:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     container_name: twenty_server
     ports:
@@ -49,7 +51,6 @@ services:
       SIGN_UP_ENABLED: "true"
     volumes:
       - /data/crm/server-storage:/app/packages/twenty-server/.local-storage
-      - ./customizations/index.js:/app/packages/twenty-emails/dist/index.js
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:3000/healthz"]
       interval: 5s
@@ -57,7 +58,9 @@ services:
       retries: 20
 
   twenty-worker:
-    image: twentycrm/twenty:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     container_name: twenty_worker
     command: ["yarn", "worker:prod"]
@@ -77,4 +80,3 @@ services:
       DISABLE_CRON_JOBS_REGISTRATION: "true"
     volumes:
       - /data/crm/server-storage:/app/packages/twenty-server/.local-storage
-      - ./customizations/index.js:/app/packages/twenty-emails/dist/index.js
