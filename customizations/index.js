@@ -1062,7 +1062,7 @@ var Footer = () => {
 var logoStyle = { marginBottom: "40px" };
 var Logo = () => {
 	return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Img, {
-		src: "https://raw.githubusercontent.com/boutiquenz99-del/crm_twenty/main/digitalstratify-assets/logo.jpg",
+		src: "https://raw.githubusercontent.com/abdessamad222/crm_twenty/main/digitalstratify-assets/logo.jpg",
 		alt: "DigitalStratify logo",
 		width: "40",
 		height: "40",
@@ -82897,12 +82897,12 @@ var SendInviteLinkEmail = ({ link, workspace, sender, serverUrl, locale }) => {
 			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Title, { value: i18n._("Join your team on DigitalStratify") }),
 			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(MainText, { children: [/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Trans, {
 				id: "{senderName} has invited you to join a workspace called <1>{workspaceName}</1>.",
-				values: {
-					senderName,
-					senderEmail,
-					workspaceName
-				},
-				components: {1: /*#__PURE__*/ (0, react_jsx_runtime.jsx)("b", {}) }
+                message: "{senderName} has invited you to join a workspace called <1>{workspaceName}</1>.",
+                values: {
+	                     senderName,
+	                     workspaceName
+                        },
+                components: {1: /*#__PURE__*/ (0, react_jsx_runtime.jsx)("b", {}) }
 			}), /*#__PURE__*/ (0, react_jsx_runtime.jsx)("br", {})] }),
 			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(HighlightedContainer, { children: [
 				workspaceLogo ? /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Img, {
