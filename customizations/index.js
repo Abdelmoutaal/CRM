@@ -1054,44 +1054,15 @@ var ShadowText = ({ children }) => {
 //#endregion
 //#region src/components/Footer.tsx
 var footerContainerStyle = { marginTop: "12px" };
-var Footer = ({ i18n }) => {
-	return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(Container, {
-		style: footerContainerStyle,
-		children: [/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(Row, { children: [
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://twenty.com/",
-				value: i18n._("Website"),
-				"aria-label": i18n._("Visit Twenty's website")
-			}) }) }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://github.com/twentyhq/twenty",
-				value: i18n._("Github"),
-				"aria-label": i18n._("Visit Twenty's GitHub repository")
-			}) }) }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://docs.twenty.com/getting-started/introduction",
-				value: i18n._("User guide"),
-				"aria-label": i18n._("Read Twenty's user guide")
-			}) }) }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://docs.twenty.com/",
-				value: i18n._("Developers"),
-				"aria-label": i18n._("Visit Twenty's developer documentation")
-			}) }) })
-		] }), /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-			i18n._("Twenty.com, Public Benefit Corporation"),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)("br", {}),
-			i18n._("San Francisco / Paris")
-		] }) })]
-	});
+var Footer = () => {
+	return null;
 };
 //#endregion
 //#region src/components/Logo.tsx
-var logoStyle = { marginBottom: "40px" };
 var Logo = () => {
 	return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Img, {
-		src: "https://app.twenty.com/images/icons/windows11/Square150x150Logo.scale-100.png",
-		alt: "Twenty logo",
+		src: "https://raw.githubusercontent.com/boutiquenz99-del/crm_twenty/main/digitalstratify-assets/logo.jpg",
+		alt: "DigitalStratify logo",
 		width: "40",
 		height: "40",
 		style: logoStyle
@@ -82924,20 +82895,13 @@ var SendInviteLinkEmail = ({ link, workspace, sender, serverUrl, locale }) => {
 		children: [
 			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Title, { value: i18n._("Join your team on DigitalStratify") }),
 			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(MainText, { children: [/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Trans, {
-				id: "{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>.",
+				id: "{senderName} has invited you to join a workspace called <1>{workspaceName}</1>.",
 				values: {
 					senderName,
 					senderEmail,
 					workspaceName
 				},
-				components: {
-					0: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-						href: `mailto:${senderEmail}`,
-						value: senderEmail,
-						color: emailTheme.font.colors.blue
-					}),
-					1: /*#__PURE__*/ (0, react_jsx_runtime.jsx)("b", {})
-				}
+				components: {1: /*#__PURE__*/ (0, react_jsx_runtime.jsx)("b", {}) }
 			}), /*#__PURE__*/ (0, react_jsx_runtime.jsx)("br", {})] }),
 			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(HighlightedContainer, { children: [
 				workspaceLogo ? /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Img, {
