@@ -1059,6 +1059,7 @@ var Footer = () => {
 };
 //#endregion
 //#region src/components/Logo.tsx
+var logoStyle = { marginBottom: "40px" };
 var Logo = () => {
 	return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Img, {
 		src: "https://raw.githubusercontent.com/boutiquenz99-del/crm_twenty/main/digitalstratify-assets/logo.jpg",
