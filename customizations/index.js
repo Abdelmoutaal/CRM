@@ -82895,15 +82895,13 @@ var SendInviteLinkEmail = ({ link, workspace, sender, serverUrl, locale }) => {
 		locale,
 		children: [
 			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Title, { value: i18n._("Join your team on DigitalStratify") }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(MainText, { children: [/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Trans, {
-				id: "{senderName} has invited you to join a workspace called <1>{workspaceName}</1>.",
-                message: "{senderName} has invited you to join a workspace called <1>{workspaceName}</1>.",
-                values: {
-	                     senderName,
-	                     workspaceName
-                        },
-                components: {1: /*#__PURE__*/ (0, react_jsx_runtime.jsx)("b", {}) }
-			}), /*#__PURE__*/ (0, react_jsx_runtime.jsx)("br", {})] }),
+			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(MainText, { children: [
+	senderName,
+	" has invited you to join a workspace called ",
+	/*#__PURE__*/ (0, react_jsx_runtime.jsx)("b", { children: workspaceName }),
+	".",
+	/*#__PURE__*/ (0, react_jsx_runtime.jsx)("br", {})
+] }),
 			/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(HighlightedContainer, { children: [
 				workspaceLogo ? /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Img, {
 					src: workspaceLogo,
