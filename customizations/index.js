@@ -82886,7 +82886,7 @@ var ls = (e) => typeof e == "string", us = RegExp("\\{\\{([^{}]+)\\}\\}", "g"), 
 //#region src/emails/send-invite-link.email.tsx
 var SendInviteLinkEmail = ({ link, workspace, sender, serverUrl, locale }) => {
 	const i18n = createI18nInstance(locale);
-	const workspaceLogo = "https://i.ibb.co/SXTcJkG9/favicon(1).png";
+	const workspaceLogo = "https://i.ibb.co/GqPqyJJ/favicon-1.png";
 	const senderName = capitalize$1(sender.firstName);
 	const senderEmail = sender.email;
 	const workspaceName = workspace.name;
