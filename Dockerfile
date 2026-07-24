@@ -1,2 +1,2 @@
-FROM twentycrm/twenty:2.23.2
+FROM twentycrm/twenty:latest
 COPY customizations/index.js /app/packages/twenty-emails/dist/index.js
