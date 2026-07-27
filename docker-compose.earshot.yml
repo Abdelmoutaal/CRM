@@ -1,0 +1,16 @@
+services:
+  earshot-bridge:
+    image: python:3.12-slim
+    restart: unless-stopped
+    container_name: earshot_bridge
+    command: sh -c "pip install --no-cache-dir -r /app/requirements.txt && uvicorn app:app --host 0.0.0.0 --port 8100"
+    working_dir: /app
+    volumes:
+      - ./earshot-twenty-bridge/app.py:/app/app.py
+      - ./earshot-twenty-bridge/requirements.txt:/app/requirements.txt
+    ports:
+      - "8100:8100"
+    environment:
+      TWENTY_API_URL: http://twenty-server:3000
+      TWENTY_API_KEY: ${TWENTY_API_KEY}
+      BRIDGE_SECRET: ${BRIDGE_SECRET}
