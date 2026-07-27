@@ -1,7 +1,7 @@
 services:
   earshot-bridge:
     build:
-      context: .
+      context: ./earshot-twenty-bridge
       dockerfile: Dockerfile
     restart: unless-stopped
     container_name: earshot_bridge
