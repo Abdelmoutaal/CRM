@@ -11,9 +11,3 @@ services:
       TWENTY_API_URL: http://twenty-server:3000
       TWENTY_API_KEY: ${TWENTY_API_KEY}
       BRIDGE_SECRET: ${BRIDGE_SECRET}
-    networks:
-      - twenty_default
-
-networks:
-  twenty_default:
-    external: true
