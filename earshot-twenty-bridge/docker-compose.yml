@@ -1,0 +1,19 @@
+services:
+  earshot-bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: earshot_bridge
+    ports:
+      - "8100:8100"
+    environment:
+      TWENTY_API_URL: http://twenty-server:3000
+      TWENTY_API_KEY: ${TWENTY_API_KEY}
+      BRIDGE_SECRET: ${BRIDGE_SECRET}
+    networks:
+      - twenty_default
+
+networks:
+  twenty_default:
+    external: true
