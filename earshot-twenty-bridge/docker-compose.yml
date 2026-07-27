@@ -1,10 +1,13 @@
 services:
   earshot-bridge:
-    build:
-      context: ./earshot-twenty-bridge
-      dockerfile: Dockerfile
+    image: python:3.12-slim
     restart: unless-stopped
     container_name: earshot_bridge
+    command: sh -c "pip install --no-cache-dir -r /app/requirements.txt && uvicorn app:app --host 0.0.0.0 --port 8100"
+    working_dir: /app
+    volumes:
+      - ./app.py:/app/app.py
+      - ./requirements.txt:/app/requirements.txt
     ports:
       - "8100:8100"
     environment:
