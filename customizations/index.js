@@ -17866,11 +17866,11 @@ var grayScale = {
 var canvasTheme = {
 	font: {
 		colors: {
-			highlighted: grayScale.gray60,
-			primary: grayScale.gray50,
-			tertiary: grayScale.gray35,
-			inverted: grayScale.gray0,
-			blue: { blue40: "#5e90f2" }.blue40
+			highlighted: "#2D2A26",
+			primary: "#2D2A26",
+			tertiary: "#8A7E6F",
+			inverted: "#2D2A26",
+			blue: "#B8965A"
 		},
 		family: "Trebuchet MS",
 		weight: {
@@ -17890,14 +17890,14 @@ var canvasTheme = {
 			sm: "4px",
 			md: "8px"
 		},
-		color: { highlighted: grayScale.gray20 }
+		color: { highlighted: "#DDD6CA" }
 	},
 	background: {
-		colors: { highlight: grayScale.gray15 },
-		button: grayScale.gray60,
+		colors: { highlight: "#FCFBF9" },
+		button: "#B8965A",
 		transparent: {
-			medium: "rgba(0, 0, 0, 0.08)",
-			light: "rgba(0, 0, 0, 0.04)"
+			medium: "rgba(45, 42, 38, 0.08)",
+			light: "rgba(45, 42, 38, 0.04)"
 		}
 	}
 };
@@ -17943,35 +17943,7 @@ var ShadowText = ({ children }) => {
 //#region src/components/Footer.tsx
 var footerContainerStyle = { marginTop: "12px" };
 var Footer = ({ i18n }) => {
-	return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(Container, {
-		style: footerContainerStyle,
-		children: [/*#__PURE__*/ (0, react_jsx_runtime.jsxs)(Row, { children: [
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://twenty.com/",
-				value: i18n._("Website"),
-				"aria-label": i18n._("Visit Twenty's website")
-			}) }) }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://github.com/twentyhq/twenty",
-				value: i18n._("Github"),
-				"aria-label": i18n._("Visit Twenty's GitHub repository")
-			}) }) }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://docs.twenty.com/getting-started/introduction",
-				value: i18n._("User guide"),
-				"aria-label": i18n._("Read Twenty's user guide")
-			}) }) }),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Column, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(Link, {
-				href: "https://docs.twenty.com/",
-				value: i18n._("Developers"),
-				"aria-label": i18n._("Visit Twenty's developer documentation")
-			}) }) })
-		] }), /*#__PURE__*/ (0, react_jsx_runtime.jsx)(ShadowText, { children: /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-			i18n._("Twenty.com, Public Benefit Corporation"),
-			/*#__PURE__*/ (0, react_jsx_runtime.jsx)("br", {}),
-			i18n._("San Francisco / Paris")
-		] }) })]
-	});
+	return null;
 };
 //#endregion
 //#region src/components/Logo.tsx
@@ -19186,6 +19158,7 @@ var BaseEmail = ({ children, width, locale }) => {
 			lang: locale,
 			children: [/*#__PURE__*/ (0, react_jsx_runtime.jsx)(BaseHead, {}), /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(Container, {
 				width: width || 290,
+				style: { backgroundColor: "#FAF7F2" },
 				children: [
 					/*#__PURE__*/ (0, react_jsx_runtime.jsx)(Logo, {}),
 					children,
@@ -19624,7 +19597,7 @@ var SubTitle = ({ value }) => {
 //#endregion
 //#region src/components/WhatIsTwenty.tsx
 var WhatIsTwenty = ({ i18n }) => {
-	return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/*#__PURE__*/ (0, react_jsx_runtime.jsx)(SubTitle, { value: i18n._("What is Twenty?") }), /*#__PURE__*/ (0, react_jsx_runtime.jsx)(MainText, { children: i18n._("It's a CRM, a software to help businesses manage their customer data and relationships efficiently.") })] });
+	return null;
 };
 //#endregion
 //#region ../../node_modules/@sniptt/guards/build/guards/primitives.js
