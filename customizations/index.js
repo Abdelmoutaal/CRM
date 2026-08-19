@@ -100330,7 +100330,7 @@ Pe$2.FIELDS_WIDGET, Pe$2.TABLE_WIDGET, Pe$2.KANBAN_WIDGET, Pe$2.LIST_WIDGET, Pe$
 //#region src/emails/send-invite-link.email.tsx
 var SendInviteLinkEmail = ({ link, workspace, sender, serverUrl, locale }) => {
 	const i18n = createI18nInstance(locale);
-        const workspaceLogo = "https://i.ibb.co/GqPqyJJ/favicon-1.png";
+        const workspaceLogo = "https://raw.githubusercontent.com/abdessamad222/crm_twenty/main/digitalstratify-assets/logo.jpg";
 	const senderName = capitalize$1(sender.firstName);
 	const senderEmail = sender.email;
 	const workspaceName = workspace.name;
