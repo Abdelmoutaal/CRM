@@ -6,7 +6,7 @@
     if (h === 'localhost' || h === '127.0.0.1' || /^\d+\.\d+\.\d+\.\d+$/.test(h)) {
       return window.location.protocol + '//' + h + ':8100';
     }
-    return window.location.protocol + '//bridge.' + h;
+    return window.location.origin + '/rls-bridge';
   })();
   var BRIDGE_SECRET = window._env_ && window._env_.RLS_BRIDGE_SECRET || 'earshot2025';
   var POLL_INTERVAL = 1500;
