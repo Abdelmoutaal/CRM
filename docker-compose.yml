@@ -33,6 +33,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     container_name: twenty_server
+    expose:
+      - "3000"
     depends_on:
       twenty-db:
         condition: service_healthy
@@ -169,15 +171,3 @@ services:
       DISABLE_CRON_JOBS_REGISTRATION: "true"
     volumes:
       - /data/crm/server-storage:/app/packages/twenty-server/.local-storage
-
-  caddy-proxy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    container_name: crm_caddy
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-    depends_on:
-      - twenty-server
-      - earshot-bridge
