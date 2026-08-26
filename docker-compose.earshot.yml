@@ -8,9 +8,20 @@ services:
     volumes:
       - ./earshot-twenty-bridge/app.py:/app/app.py
       - ./earshot-twenty-bridge/requirements.txt:/app/requirements.txt
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8100:8100"
     environment:
-      TWENTY_API_URL: http://twenty-server:3000
+      TWENTY_API_URL: http://odoo19-twenty-server-1:3000
       TWENTY_API_KEY: ${TWENTY_API_KEY}
       BRIDGE_SECRET: ${BRIDGE_SECRET}
+      PG_DATABASE_URL: postgresql://twenty:twenty@odoo19-twenty-db-1:5432/twenty
+      TWENTY_SERVER_CONTAINER: odoo19-twenty-server-1
+      REDIS_URL: redis://odoo19-twenty-redis-1:6379
+    networks:
+      - default
+
+networks:
+  default:
+    name: odoo19_default
+    external: true

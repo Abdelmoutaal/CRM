@@ -1,2 +1,4 @@
 .env
+.env.*
 nginx.conf.bak
+docker-compose.local.yml
