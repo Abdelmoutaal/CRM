@@ -1,7 +1,13 @@
 (function() {
   'use strict';
 
-  var BRIDGE_BASE = window.location.protocol + '//' + window.location.hostname + ':8100';
+  var BRIDGE_BASE = (function() {
+    var h = window.location.hostname;
+    if (h === 'localhost' || h === '127.0.0.1' || /^\d+\.\d+\.\d+\.\d+$/.test(h)) {
+      return window.location.protocol + '//' + h + ':8100';
+    }
+    return window.location.protocol + '//bridge.' + h;
+  })();
   var BRIDGE_SECRET = window._env_ && window._env_.RLS_BRIDGE_SECRET || 'earshot2025';
   var POLL_INTERVAL = 1500;
   var lastUrl = '';
