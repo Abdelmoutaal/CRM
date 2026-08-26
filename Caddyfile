@@ -1,0 +1,12 @@
+{
+    http_port 3000
+}
+
+:3000 {
+    handle /rls-bridge/* {
+        uri strip_prefix /rls-bridge
+        reverse_proxy earshot-bridge:8100
+    }
+
+    reverse_proxy twenty-server:3000
+}
