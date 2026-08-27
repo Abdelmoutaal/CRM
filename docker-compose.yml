@@ -126,15 +126,11 @@ services:
         exit 1
 
   earshot-bridge:
-    image: python:3.12-slim
+    build:
+      context: ./earshot-twenty-bridge
+      dockerfile: Dockerfile
     restart: unless-stopped
     container_name: earshot_bridge
-    command: sh -c "pip install --no-cache-dir -r /app/requirements.txt && uvicorn app:app --host 0.0.0.0 --port 8100"
-    working_dir: /app
-    volumes:
-      - ./earshot-twenty-bridge/app.py:/app/app.py
-      - ./earshot-twenty-bridge/requirements.txt:/app/requirements.txt
-      - /var/run/docker.sock:/var/run/docker.sock
     expose:
       - "8100"
     depends_on:
@@ -147,6 +143,8 @@ services:
       PG_DATABASE_URL: postgresql://twenty:twenty@twenty-db:5432/twenty
       TWENTY_SERVER_CONTAINER: twenty-server
       REDIS_URL: redis://twenty-redis:6379
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - traefik.enable=true
       - traefik.http.routers.https-0-earshot-bridge.entryPoints=https
