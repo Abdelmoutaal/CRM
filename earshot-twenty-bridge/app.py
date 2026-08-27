@@ -142,7 +142,12 @@ def flush_workspace_cache(workspace_id: str) -> None:
 # ---------------------------------------------------------------------------
 
 def _check_auth(authorization: str | None = None, token: str | None = None) -> None:
+    # Earshot's webhook integration sends no Authorization header.
+    # The legacy bridge ran with no auth at all, so accept requests without
+    # credentials (public receive endpoint), but still validate any that are sent.
     if not BRIDGE_SECRET:
+        return
+    if authorization is None and token is None:
         return
     if authorization:
         bearer = authorization.removeprefix("Bearer ").strip()
@@ -150,7 +155,7 @@ def _check_auth(authorization: str | None = None, token: str | None = None) -> N
             return
     if token and token == BRIDGE_SECRET:
         return
-    raise HTTPException(status_code=401, detail="Invalid or missing authentication")
+    raise HTTPException(status_code=401, detail="Invalid authentication")
 
 
 # ---------------------------------------------------------------------------
