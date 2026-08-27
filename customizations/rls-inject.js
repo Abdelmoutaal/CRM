@@ -141,7 +141,7 @@
     title.textContent = 'Data Access (RLS)';
 
     var badge = document.createElement('span');
-    badge.style.cssText = 'font-size:10px;padding:2px 8px;border-radius:12px;font-weight:500;background:var(--background-accent-tertiary, #e8eaed);color:var(--text-secondary, #666)';
+    badge.style.cssText = 'font-size:10px;padding:2px 8px;border-radius:12px;font-weight:500;background:#383838;color:#9ca3af;border:1px solid #404040';
     badge.textContent = 'Custom';
     titleRow.appendChild(title);
     titleRow.appendChild(badge);
