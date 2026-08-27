@@ -173,7 +173,7 @@ class FolderInfo(BaseModel):
     color: Optional[str] = None
 
 class EarshotMeeting(BaseModel):
-    id: str
+    id: str | int
     title: str
     date: Optional[str] = None
     date_iso: Optional[str] = None
@@ -181,11 +181,12 @@ class EarshotMeeting(BaseModel):
     agenda: Optional[str] = None
     template: Optional[str] = None
     folder: Optional[FolderInfo] = None
-    duration_secs: Optional[int] = None
+    duration_secs: Optional[float] = None
     status: Optional[str] = None
     transcript: Optional[str] = None
     notes: Optional[dict] = None
     bookmarks: Optional[list] = None
+    model_config = {"extra": "ignore"}
 
 
 # ---------------------------------------------------------------------------
@@ -269,7 +270,7 @@ def create_note(title: str, body: str, person_ids: list[str]) -> Optional[str]:
 
 def create_call_recording(
     title: str, summary: str, transcript: Optional[str],
-    duration_secs: Optional[int], start_date: Optional[str],
+    duration_secs: Optional[float], start_date: Optional[str],
     person_ids: list[str],
 ) -> Optional[str]:
     q = """
@@ -280,12 +281,22 @@ def create_call_recording(
     call_data: dict = {"title": title, "summary": {"markdown": summary or ""}}
     if transcript:
         call_data["transcript"] = transcript
+
+    started_at: Optional[str] = None
     if start_date:
-        call_data["startedAt"] = start_date
+        s = str(start_date).strip()
+        if len(s) == 10:
+            started_at = s + "T12:00:00.000Z"
+        elif s.endswith("Z") or "+" in s:
+            started_at = s
+        else:
+            started_at = s + "Z"
+    if started_at:
+        call_data["startedAt"] = started_at
         if duration_secs:
             try:
                 from datetime import timedelta
-                end_dt = datetime.fromisoformat(start_date.replace("Z", "+00:00")) + timedelta(seconds=duration_secs)
+                end_dt = datetime.fromisoformat(started_at.replace("Z", "+00:00")) + timedelta(seconds=float(duration_secs))
                 call_data["endedAt"] = end_dt.isoformat().replace("+00:00", "Z")
             except Exception:
                 pass
