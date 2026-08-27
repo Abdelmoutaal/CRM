@@ -243,19 +243,20 @@ def find_person_by_name(name: str) -> Optional[str]:
 def create_note(title: str, body: str, person_ids: list[str]) -> Optional[str]:
     q = """
     mutation CreateNote($body: String!, $title: String!) {
-      createNote(data: { body: $body, title: $title }) { note { id } }
+      createNote(data: { title: $title, bodyV2: { markdown: $body } }) { id }
     }
     """
     data = twenty_gql(q, {"body": body, "title": title})
-    note_id = data.get("data", {}).get("createNote", {}).get("note", {}).get("id")
+    create_note_resp = data.get("data", {}).get("createNote")
+    note_id = (create_note_resp or {}).get("id")
     if not note_id:
         return None
 
     for pid in person_ids:
         link_q = """
         mutation LinkNoteToPerson($noteId: ID!, $personId: ID!) {
-          createNoteTarget(data: { note: { id: $noteId }, person: { id: $personId } }) {
-            noteTarget { id }
+          createNoteTarget(data: { noteId: $noteId, targetPersonId: $personId }) {
+            id
           }
         }
         """
@@ -271,31 +272,35 @@ def create_call_recording(
 ) -> Optional[str]:
     q = """
     mutation CreateCall($input: CreateCallRecordingInput!) {
-      createCallRecording(data: $input) { callRecording { id } }
+      createCallRecording(data: $input) { id }
     }
     """
-    call_data: dict = {"title": title, "summary": summary or ""}
+    call_data: dict = {"title": title, "summary": {"markdown": summary or ""}}
     if transcript:
         call_data["transcript"] = transcript
-    if duration_secs:
-        call_data["durationInSeconds"] = duration_secs
     if start_date:
-        call_data["startDateTime"] = start_date
+        call_data["startedAt"] = start_date
+        if duration_secs:
+            try:
+                from datetime import timedelta
+                end_dt = datetime.fromisoformat(start_date.replace("Z", "+00:00")) + timedelta(seconds=duration_secs)
+                call_data["endedAt"] = end_dt.isoformat().replace("+00:00", "Z")
+            except Exception:
+                pass
 
     data = twenty_gql(q, {"input": call_data})
-    call_id = data.get("data", {}).get("createCallRecording", {}).get("callRecording", {}).get("id")
+    create_call_resp = data.get("data", {}).get("createCallRecording")
+    call_id = (create_call_resp or {}).get("id")
     if not call_id:
+        log.error("createCallRecording failed: %s", data.get("errors"))
         return None
 
-    for pid in person_ids:
-        link_q = """
-        mutation LinkCallToPerson($callId: ID!, $personId: ID!) {
-          createCallParticipant(data: { callRecording: { id: $callId }, person: { id: $personId } }) {
-            callParticipant { id }
-          }
-        }
-        """
-        twenty_gql(link_q, {"callId": call_id, "personId": pid})
+    if person_ids:
+        log.info(
+            "No CallParticipant mutation available in this Twenty schema; skipping "
+            "call-to-person links for %d people (persons are still linked to the note)",
+            len(person_ids),
+        )
 
     return call_id
 
