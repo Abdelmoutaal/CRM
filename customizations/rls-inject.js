@@ -161,7 +161,8 @@
     selectRow.appendChild(selectLabel);
 
     var select = document.createElement('select');
-    select.style.cssText = 'appearance:none;-webkit-appearance:none;background:var(--background-primary, #fff) url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%238c8c8c\' stroke-width=\'2\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E") no-repeat right 8px center;border:1px solid var(--border-color-strong, #d9d9d9);border-radius:var(--border-radius-md, 6px);padding:6px 28px 6px 10px;font-size:13px;color:var(--text-primary, #1a1a2e);cursor:pointer;outline:none;min-width:160px;font-family:inherit;transition:border-color .15s';
+    var selectCss = 'appearance:none;-webkit-appearance:none;background:#242424 url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%239ca3af\' stroke-width=\'2\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E") no-repeat right 8px center;border:1px solid #404040;border-radius:6px;padding:6px 28px 6px 10px;font-size:13px;color:#f5f5f5;cursor:pointer;outline:none;min-width:160px;font-family:inherit;transition:border-color .15s,box-shadow .15s';
+    select.style.cssText = selectCss;
     var opts = [
       { value: 'all', text: 'All records' },
       { value: 'own', text: 'My records only' },
@@ -174,8 +175,10 @@
       if (opts[i].value === currentMode) o.selected = true;
       select.appendChild(o);
     }
-    select.addEventListener('mouseenter', function() { select.style.borderColor = 'var(--border-color-strong, #a0a0a0)'; });
-    select.addEventListener('mouseleave', function() { select.style.borderColor = 'var(--border-color-strong, #d9d9d9)'; });
+    select.addEventListener('mouseenter', function() { select.style.borderColor = '#3b82f6'; select.style.boxShadow = '0 0 0 3px rgba(59,130,246,.2)'; });
+    select.addEventListener('mouseleave', function() { select.style.borderColor = '#404040'; select.style.boxShadow = 'none'; });
+    select.addEventListener('focus', function() { select.style.borderColor = '#3b82f6'; select.style.boxShadow = '0 0 0 3px rgba(59,130,246,.2)'; });
+    select.addEventListener('blur', function() { select.style.borderColor = '#404040'; select.style.boxShadow = 'none'; });
     selectRow.appendChild(select);
     card.appendChild(selectRow);
 
