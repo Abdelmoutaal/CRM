@@ -682,7 +682,9 @@ header span{font-size:13px;opacity:.6}
 main{max-width:960px;margin:24px auto;padding:0 24px}
 .role-row{display:flex;align-items:center;gap:12px;margin-bottom:24px}
 .role-row label{font-size:14px;font-weight:600}
-select{padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:15px;background:#fff}
+select{appearance:none;-webkit-appearance:none;-moz-appearance:none;padding:10px 34px 10px 14px;border:1px solid #404040;border-radius:8px;font-size:15px;background:#242424 url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center/16px;color:#f5f5f5;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+select:hover{border-color:#3b82f6}
+select:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.2)}
 .obj-card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .obj-left{display:flex;align-items:center;gap:10px;min-width:200px}
 .obj-icon{width:32px;height:32px;background:#e0e0ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#6366f1;flex-shrink:0}
@@ -690,7 +692,9 @@ select{padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:15px;
 .obj-right{display:flex;align-items:center;gap:20px;flex:1;justify-content:flex-end;flex-wrap:wrap}
 .data-access{display:flex;align-items:center;gap:8px}
 .data-access label{font-size:12px;color:#666;font-weight:500;white-space:nowrap}
-.data-access select{padding:6px 10px;border-radius:6px;font-size:13px;border:1px solid #ddd;min-width:140px}
+.data-access select{appearance:none;-webkit-appearance:none;-moz-appearance:none;padding:6px 30px 6px 10px;border-radius:6px;font-size:13px;border:1px solid #3a3a3a;min-width:140px;background:#1e1e1e url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 8px center/14px;color:#f5f5f5;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.data-access select:hover{border-color:#3b82f6}
+.data-access select:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.2)}
 .crud-badges{display:flex;gap:6px}
 .crud-badge{font-size:11px;padding:3px 8px;border-radius:4px;font-weight:500;border:1px solid #e5e7eb}
 .crud-on{background:#ecfdf5;color:#059669;border-color:#a7f3d0}
