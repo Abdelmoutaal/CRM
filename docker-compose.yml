@@ -126,12 +126,12 @@ services:
         echo '=== RLS setup FAILED after 10 minutes of retries ==='
         exit 1
 
-  earshot-bridge:
+  rls-bridge:
     build:
       context: ./earshot-twenty-bridge
       dockerfile: Dockerfile
     restart: unless-stopped
-    container_name: earshot_bridge
+    container_name: rls_bridge
     expose:
       - "8100"
     depends_on:
@@ -148,15 +148,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - traefik.enable=true
-      - traefik.http.routers.https-0-earshot-bridge.entryPoints=https
-      - traefik.http.routers.https-0-earshot-bridge.middlewares=gzip,strip-rls
-      - "traefik.http.routers.https-0-earshot-bridge.rule=Host(`crm.digitalstratify.co`) && PathPrefix(`/rls-bridge`)"
-      - traefik.http.routers.https-0-earshot-bridge.tls.certresolver=letsencrypt
-      - traefik.http.routers.https-0-earshot-bridge.tls=true
-      - traefik.http.routers.http-0-earshot-bridge.entryPoints=http
-      - "traefik.http.routers.http-0-earshot-bridge.rule=Host(`crm.digitalstratify.co`) && PathPrefix(`/rls-bridge`)"
-      - traefik.http.routers.http-0-earshot-bridge.middlewares=redirect-to-https,strip-rls
-      - traefik.http.services.earshot-bridge.loadbalancer.server.port=8100
+      - traefik.http.routers.https-0-rls-bridge.entryPoints=https
+      - traefik.http.routers.https-0-rls-bridge.middlewares=gzip,strip-rls
+      - "traefik.http.routers.https-0-rls-bridge.rule=Host(`crm.digitalstratify.co`) && PathPrefix(`/rls-bridge`)"
+      - traefik.http.routers.https-0-rls-bridge.tls.certresolver=letsencrypt
+      - traefik.http.routers.https-0-rls-bridge.tls=true
+      - traefik.http.routers.http-0-rls-bridge.entryPoints=http
+      - "traefik.http.routers.http-0-rls-bridge.rule=Host(`crm.digitalstratify.co`) && PathPrefix(`/rls-bridge`)"
+      - traefik.http.routers.http-0-rls-bridge.middlewares=redirect-to-https,strip-rls
+      - traefik.http.services.rls-bridge.loadbalancer.server.port=8100
       - traefik.http.middlewares.strip-rls.stripprefix.prefixes=/rls-bridge
 
   twenty-worker:
