@@ -268,6 +268,39 @@ def create_note(title: str, body: str, person_ids: list[str]) -> Optional[str]:
     return note_id
 
 
+def _transcript_to_json(transcript: Optional[str]) -> Optional[dict]:
+    """Convert Earshot's plain-text transcript into valid JSON for Twenty.
+
+    Earshot transcripts look like: "[00:00] Them: I was wrong.\n[00:05] Me: Hello..."
+    The Twenty transcript field is of type JSON; JSON strings alone are rejected,
+    so we parse lines into segments and fall back to an object wrapper.
+    """
+    if not transcript:
+        return None
+    lines = str(transcript).splitlines()
+    segments = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        time_str = None
+        speaker = None
+        text = line
+        if line.startswith("[") and "]" in line:
+            time_str = line[1:].split("]")[0]
+            rest = line.split("]", 1)[1].strip()
+            if ":" in rest:
+                speaker, text = rest.split(":", 1)
+                speaker = speaker.strip()
+                text = text.strip()
+            elif rest:
+                text = rest
+        segments.append({"time": time_str, "speaker": speaker, "text": text})
+    if segments:
+        return {"segments": segments}
+    return {"text": str(transcript)}
+
+
 def create_call_recording(
     title: str, summary: str, transcript: Optional[str],
     duration_secs: Optional[float], start_date: Optional[str],
@@ -279,8 +312,9 @@ def create_call_recording(
     }
     """
     call_data: dict = {"title": title, "summary": {"markdown": summary or ""}}
-    if transcript:
-        call_data["transcript"] = transcript
+    transcript_json = _transcript_to_json(transcript)
+    if transcript_json:
+        call_data["transcript"] = transcript_json
 
     started_at: Optional[str] = None
     if start_date:
