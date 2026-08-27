@@ -223,20 +223,22 @@ def find_person_by_email(email: str) -> Optional[str]:
     }
     """
     data = twenty_gql(q, {"email": email})
-    edges = data.get("data", {}).get("people", {}).get("edges", [])
+    people = data.get("data", {}).get("people")
+    edges = (people or {}).get("edges", [])
     return edges[0]["node"]["id"] if edges else None
 
 
 def find_person_by_name(name: str) -> Optional[str]:
     q = """
     query FindPersonByName($name: String!) {
-      people(filter: { name: { firstName: { contains: $name } } }) {
+      people(filter: { name: { firstName: { ilike: $name } } }) {
         edges { node { id } }
       }
     }
     """
-    data = twenty_gql(q, {"name": name})
-    edges = data.get("data", {}).get("people", {}).get("edges", [])
+    data = twenty_gql(q, {"name": f"%{name}%"})
+    people = data.get("data", {}).get("people")
+    edges = (people or {}).get("edges", [])
     return edges[0]["node"]["id"] if edges else None
 
 
