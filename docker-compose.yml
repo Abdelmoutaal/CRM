@@ -147,6 +147,18 @@ services:
       PG_DATABASE_URL: postgresql://twenty:twenty@twenty-db:5432/twenty
       TWENTY_SERVER_CONTAINER: twenty-server
       REDIS_URL: redis://twenty-redis:6379
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.https-0-earshot-bridge.entryPoints=https
+      - traefik.http.routers.https-0-earshot-bridge.middlewares=gzip,strip-rls
+      - "traefik.http.routers.https-0-earshot-bridge.rule=Host(`crm.digitalstratify.co`) && PathPrefix(`/rls-bridge`)"
+      - traefik.http.routers.https-0-earshot-bridge.tls.certresolver=letsencrypt
+      - traefik.http.routers.https-0-earshot-bridge.tls=true
+      - traefik.http.routers.http-0-earshot-bridge.entryPoints=http
+      - "traefik.http.routers.http-0-earshot-bridge.rule=Host(`crm.digitalstratify.co`) && PathPrefix(`/rls-bridge`)"
+      - traefik.http.routers.http-0-earshot-bridge.middlewares=redirect-to-https,strip-rls
+      - traefik.http.services.earshot-bridge.loadbalancer.server.port=8100
+      - traefik.http.middlewares.strip-rls.stripprefix.prefixes=/rls-bridge
 
   twenty-worker:
     build:
